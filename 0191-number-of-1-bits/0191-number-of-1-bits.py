@@ -5,6 +5,6 @@ class Solution:
             k=n&1
             if k==1:
                 count+=1
-            n=n>>1
+            n=n>>1 #right shift 1
         return count
         
