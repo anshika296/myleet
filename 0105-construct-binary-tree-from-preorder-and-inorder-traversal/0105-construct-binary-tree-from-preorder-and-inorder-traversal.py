@@ -6,10 +6,26 @@
 #         self.right = right
 class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
-        if not preorder or not inorder:
+        '''if not preorder or not inorder:
             return None
         root=TreeNode(preorder[0])
         mid=inorder.index(preorder[0]) #we are checking index of root in inorder
         root.left=self.buildTree(preorder[1:mid+1],inorder[:mid])
         root.right=self.buildTree(preorder[mid+1:],inorder[mid+1:])
-        return root
+        return root'''
+        index={}
+        for i in range(len(inorder)):
+            index[inorder[i]]=i
+        preorder_index=0
+        def dfs(left,right):
+            nonlocal preorder_index
+            if left>right:
+                return None
+            root_value=preorder[preorder_index]
+            preorder_index+=1
+            root=TreeNode(root_value)
+            mid=index[root_value]
+            root.left=dfs(left,mid-1)
+            root.right=dfs(mid+1,right)
+            return root
+        return dfs(0,len(inorder)-1)
